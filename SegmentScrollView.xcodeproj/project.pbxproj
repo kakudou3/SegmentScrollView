@@ -14,6 +14,7 @@
 		F711281121593C250040D43D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F711280F21593C250040D43D /* LaunchScreen.storyboard */; };
 		F711281C21593C260040D43D /* SegmentScrollViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F711281B21593C260040D43D /* SegmentScrollViewTests.swift */; };
 		F711282721593C260040D43D /* SegmentScrollViewUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F711282621593C260040D43D /* SegmentScrollViewUITests.swift */; };
+		F711283621593D070040D43D /* Cartography.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F711283521593D070040D43D /* Cartography.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +48,7 @@
 		F711282221593C260040D43D /* SegmentScrollViewUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SegmentScrollViewUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F711282621593C260040D43D /* SegmentScrollViewUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentScrollViewUITests.swift; sourceTree = "<group>"; };
 		F711282821593C260040D43D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F711283521593D070040D43D /* Cartography.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cartography.framework; path = Carthage/Build/iOS/Cartography.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +56,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F711283621593D070040D43D /* Cartography.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -81,6 +84,7 @@
 				F711281A21593C260040D43D /* SegmentScrollViewTests */,
 				F711282521593C260040D43D /* SegmentScrollViewUITests */,
 				F711280421593C230040D43D /* Products */,
+				F711283421593D070040D43D /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -125,6 +129,14 @@
 			path = SegmentScrollViewUITests;
 			sourceTree = "<group>";
 		};
+		F711283421593D070040D43D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				F711283521593D070040D43D /* Cartography.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -135,6 +147,7 @@
 				F71127FF21593C230040D43D /* Sources */,
 				F711280021593C230040D43D /* Frameworks */,
 				F711280121593C230040D43D /* Resources */,
+				F711283721593D110040D43D /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -250,6 +263,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		F711283721593D110040D43D /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Carthage/Build/iOS/Cartography.framework",
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/local/bin/carthage copy-frameworks";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		F71127FF21593C230040D43D /* Sources */ = {
@@ -431,7 +461,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 83VT7AD3ZA;
+				DEVELOPMENT_TEAM = 2MBJ8DCP76;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = SegmentScrollView/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -449,7 +483,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 83VT7AD3ZA;
+				DEVELOPMENT_TEAM = 2MBJ8DCP76;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = SegmentScrollView/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

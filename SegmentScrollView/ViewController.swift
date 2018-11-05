@@ -41,11 +41,15 @@ class ViewController: UIViewController {
             $0.edges == $0.superview!.edges
         }
         
-        constrain(self.headerContentsView) {
-            $0.height == 1000
-            $0.width == 100
-            $0.top == $0.superview!.top
-            $0.bottom == $0.superview!.bottom
+        constrain(self.headerContentsView, self.tableView) { (header, table) in
+            header.height == 300
+            header.width == 100
+            header.top == header.superview!.top
+            
+            table.height == self.view.bounds.height
+            table.width == self.view.bounds.width
+            table.top == header.bottom
+            table.bottom == table.superview!.bottom
         }
     }
     
@@ -54,6 +58,7 @@ class ViewController: UIViewController {
         
         print(self.mainScrollView.frame)
         print(self.contentView.frame)
+        print(self.mainScrollView.contentSize.height)
     }
 
     override func didReceiveMemoryWarning() {
@@ -67,12 +72,13 @@ extension ViewController {
         // main scroll view
         //self.mainScrollView.frame = CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: self.view.frame.size.height)
         self.mainScrollView.backgroundColor = UIColor.green.withAlphaComponent(0.1)
-        self.mainScrollView.isScrollEnabled = true
-        self.mainScrollView.alwaysBounceVertical = true
-        self.mainScrollView.isExclusiveTouch = true
-        self.mainScrollView.delaysContentTouches = true
+        self.mainScrollView.isScrollEnabled = false
+        self.mainScrollView.alwaysBounceVertical = false
+        //self.mainScrollView.isExclusiveTouch = true
+        //self.mainScrollView.delaysContentTouches = true
         self.mainScrollView.showsVerticalScrollIndicator = true
         self.mainScrollView.delegate = self
+        
         self.view.addSubview(self.mainScrollView)
         
         // content view
@@ -125,14 +131,13 @@ extension ViewController {
     }
 }
 
+var scrollValue: CGFloat = 0
 extension ViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if scrollView == self.mainScrollView {
-            print(scrollView.contentOffset.y)
-        }
+        print(scrollView.contentOffset.y)
         
-        if scrollView == self.tableView {
-            print(scrollView.contentOffset.y)
+        if scrollView.contentOffset.y >= 334 {
+            
         }
     }
 }

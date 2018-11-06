@@ -11,6 +11,12 @@
 		6296DCA3218D219D00D41B9C /* RxNuke.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6296DCA2218D219D00D41B9C /* RxNuke.framework */; };
 		6296DCA5218D21AC00D41B9C /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6296DCA4218D21AC00D41B9C /* RxSwift.framework */; };
 		6296DCA7218D21BC00D41B9C /* RxCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6296DCA6218D21BC00D41B9C /* RxCocoa.framework */; };
+		F703602421917E9C00B7805B /* CustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F703602321917E9C00B7805B /* CustomTableViewCell.swift */; };
+		F703602521917E9C00B7805B /* CustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F703602321917E9C00B7805B /* CustomTableViewCell.swift */; };
+		F703602621917E9C00B7805B /* CustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F703602321917E9C00B7805B /* CustomTableViewCell.swift */; };
+		F703602C2191853A00B7805B /* CustomHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F703602B2191853A00B7805B /* CustomHeaderView.swift */; };
+		F703602D2191853A00B7805B /* CustomHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F703602B2191853A00B7805B /* CustomHeaderView.swift */; };
+		F703602E2191853A00B7805B /* CustomHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F703602B2191853A00B7805B /* CustomHeaderView.swift */; };
 		F711280721593C230040D43D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F711280621593C230040D43D /* AppDelegate.swift */; };
 		F711280921593C230040D43D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F711280821593C230040D43D /* ViewController.swift */; };
 		F711280C21593C230040D43D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F711280A21593C230040D43D /* Main.storyboard */; };
@@ -44,6 +50,8 @@
 		6296DCA4218D21AC00D41B9C /* RxSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxSwift.framework; path = Carthage/Build/iOS/RxSwift.framework; sourceTree = "<group>"; };
 		6296DCA6218D21BC00D41B9C /* RxCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxCocoa.framework; path = Carthage/Build/iOS/RxCocoa.framework; sourceTree = "<group>"; };
 		6296DCA8218D21CA00D41B9C /* RxTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxTest.framework; path = Carthage/Build/iOS/RxTest.framework; sourceTree = "<group>"; };
+		F703602321917E9C00B7805B /* CustomTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTableViewCell.swift; sourceTree = "<group>"; };
+		F703602B2191853A00B7805B /* CustomHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomHeaderView.swift; sourceTree = "<group>"; };
 		F711280321593C230040D43D /* SegmentScrollView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SegmentScrollView.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F711280621593C230040D43D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F711280821593C230040D43D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -120,6 +128,8 @@
 				F711280D21593C250040D43D /* Assets.xcassets */,
 				F711280F21593C250040D43D /* LaunchScreen.storyboard */,
 				F711281221593C250040D43D /* Info.plist */,
+				F703602321917E9C00B7805B /* CustomTableViewCell.swift */,
+				F703602B2191853A00B7805B /* CustomHeaderView.swift */,
 			);
 			path = SegmentScrollView;
 			sourceTree = "<group>";
@@ -308,6 +318,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F703602C2191853A00B7805B /* CustomHeaderView.swift in Sources */,
+				F703602421917E9C00B7805B /* CustomTableViewCell.swift in Sources */,
 				F711280921593C230040D43D /* ViewController.swift in Sources */,
 				F711280721593C230040D43D /* AppDelegate.swift in Sources */,
 			);
@@ -317,6 +329,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F703602521917E9C00B7805B /* CustomTableViewCell.swift in Sources */,
+				F703602D2191853A00B7805B /* CustomHeaderView.swift in Sources */,
 				F711281C21593C260040D43D /* SegmentScrollViewTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -325,6 +339,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F703602621917E9C00B7805B /* CustomTableViewCell.swift in Sources */,
+				F703602E2191853A00B7805B /* CustomHeaderView.swift in Sources */,
 				F711282721593C260040D43D /* SegmentScrollViewUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -483,7 +499,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 83VT7AD3ZA;
+				DEVELOPMENT_TEAM = 2MBJ8DCP76;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
@@ -505,7 +521,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 83VT7AD3ZA;
+				DEVELOPMENT_TEAM = 2MBJ8DCP76;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",

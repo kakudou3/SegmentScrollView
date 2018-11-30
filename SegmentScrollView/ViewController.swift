@@ -220,6 +220,14 @@ extension ViewController {
             return
         }
         
+        scrollView.rx.contentOffset.subscribe(onNext: {
+            print($0)
+        }).disposed(by: self.disposeBag)
+        
+        scrollView.rx.contentInset.subscribe(onNext: {
+            print($0)
+        }).disposed(by: self.disposeBag)
+        
         scrollView.addObserver(self, forKeyPath: "contentOffset", options: [.new, .old], context: &self.kOffset)
         scrollView.addObserver(self, forKeyPath: "contentInset", options: [.new, .old], context: &self.kInset)
     }
@@ -308,44 +316,7 @@ extension ViewController {
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         if context == &kOffset && !ignoreOffsetChanged {
             
-            let offset = change![NSKeyValueChangeKey.newKey] as! CGPoint
-            let offsetY = offset.y
-            let oldOffset = change![NSKeyValueChangeKey.oldKey] as! CGPoint
-            let oldOffsetY = oldOffset.y
-            let deltaOfOffsetY = offset.y - oldOffsetY
-            let offsetYWithSegment = offset.y + self.segmentHeight
             
-            if deltaOfOffsetY > 0 && offsetY >= -(self.headerHeight + self.segmentHeight) {
-                if (self.headerHeightConstraint.constant - deltaOfOffsetY) <= 0 {
-                    self.headerHeightConstraint.constant = self.segmentMiniTopInset
-                } else {
-                    self.headerHeightConstraint.constant -= deltaOfOffsetY
-                }
-                
-                if self.headerHeightConstraint.constant <= self.segmentMiniTopInset {
-                    self.headerHeightConstraint.constant = self.segmentMiniTopInset
-                }
-            } else {
-                if offsetY > 0 {
-                    if self.headerHeightConstraint.constant <= self.segmentMiniTopInset {
-                        self.headerHeightConstraint.constant = self.segmentMiniTopInset
-                    }
-                } else {
-                    if self.headerHeightConstraint.constant >= self.headerHeight {
-                        if -offsetYWithSegment > self.headerHeight && !freezenHeaderWhenReachMaxHeaderHeight {
-                            self.headerHeightConstraint.constant = -offsetYWithSegment
-                        } else {
-                            self.headerHeightConstraint.constant = self.headerHeight
-                        }
-                    } else {
-                        if self.headerHeightConstraint.constant < -offsetYWithSegment {
-                            self.headerHeightConstraint.constant -= deltaOfOffsetY
-                        }
-                    }
-                }
-            }
-            
-            self.segmentTopInset = self.headerHeightConstraint.constant
         } else if context == &kInset {
             //print("inset")
             let insets = object as! UIEdgeInsets
@@ -386,4 +357,14 @@ extension HTTPURLResponse {
     }
 }
 
+
+extension Reactive where Base: UIScrollView {
+    var contentOffset: Observable<CGPoint?> {
+        return observe(CGPoint.self, #keyPath(UIScrollView.contentOffset))
+    }
+    
+    var contentInset: Observable<UIEdgeInsets?> {
+        return observe(UIEdgeInsets.self, #keyPath(UIScrollView.contentInset))
+    }
+}
 

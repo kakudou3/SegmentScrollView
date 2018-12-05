@@ -1,4 +1,4 @@
 github "robb/Cartography" "26f41bb7426b68d1f329ca9512471d1e985b954a"
 github "kean/Nuke" "7.3.2"
 github "kean/RxNuke" "0.7"
-
+github "PrideChung/FontAwesomeKit" "2.2.1"

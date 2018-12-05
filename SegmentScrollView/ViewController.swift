@@ -10,8 +10,6 @@ import UIKit
 import Cartography
 import RxSwift
 import RxCocoa
-import Nuke
-import RxNuke
 
 protocol SegmentControllerDelegate {
     func segmentTitle() -> String
@@ -46,13 +44,17 @@ class TableViewController: UITableViewController, SegmentControllerDelegate {
 }
 
 class ViewController: UIViewController {
-    var kOffset: UInt8 = 0
-    var kInset: UInt8 = 1
     
-    let headerHeight: CGFloat = 400
+    // base value
+    let headerBaseHeight: CGFloat = 250
+    
+    var headerHeight: CGFloat {
+        return self.headerBaseHeight
+    }
+    
     let segmentHeight: CGFloat = 44
     var originalTopInset: CGFloat = 0
-    let segmentMiniTopInset: CGFloat = 0
+    let segmentMiniTopInset: CGFloat = 0 // segment controlの固定位置
     var segmentTopInset: CGFloat = 400
     var freezenHeaderWhenReachMaxHeaderHeight: Bool = false
     
@@ -68,6 +70,9 @@ class ViewController: UIViewController {
     var hasShownControllers: [TableViewController] = []
     
     let disposeBag: DisposeBag = .init()
+    
+    var disposable1: Disposable?
+    var disposable2: Disposable?
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -214,22 +219,75 @@ extension ViewController {
         self.view.addConstraint(NSLayoutConstraint(item: pageView, attribute: .top, relatedBy: .equal, toItem: self.view, attribute: .top, multiplier: 1, constant: 0))
         self.view.addConstraint(NSLayoutConstraint(item: pageView, attribute: .bottom, relatedBy: .equal, toItem: self.view, attribute: .bottom, multiplier: 1, constant: 0))
     }
-    
+
     func addObserverForPageController(controller: TableViewController) {
         guard let scrollView = self.scrollViewInPageController(controller: controller) else {
             return
         }
         
-        scrollView.rx.contentOffset.subscribe(onNext: {
-            print($0)
-        }).disposed(by: self.disposeBag)
+        self.disposable1 = Observable.zip(scrollView.rx.contentOffset.skip(1), scrollView.rx.contentOffset).subscribe(onNext: {
+            
+            guard let offset = $0 else {
+                return
+            }
+            
+            guard let oldOffset = $1 else {
+                return
+            }
+            
+            let offsetY = offset.y
+            let oldOffsetY = oldOffset.y
+            let deltaOfOffsetY = offset.y - oldOffsetY
+            let offsetYWithSegment = offset.y + self.segmentHeight
+            
+            
+            self.headerContentsView.updateScrollOffset(contentOffset: offset)
+            
+            
+            if deltaOfOffsetY > 0 && offsetY >= -(self.headerHeight + self.segmentHeight) {
+                if (self.headerHeightConstraint.constant - deltaOfOffsetY) <= 0 {
+                    self.headerHeightConstraint.constant = self.segmentMiniTopInset
+                } else {
+                    self.headerHeightConstraint.constant -= deltaOfOffsetY
+                }
+                
+                if self.headerHeightConstraint.constant <= self.segmentMiniTopInset {
+                    self.headerHeightConstraint.constant = self.segmentMiniTopInset
+                }
+            } else {
+                if offsetY > 0 {
+                    if self.headerHeightConstraint.constant <= self.segmentMiniTopInset {
+                        self.headerHeightConstraint.constant = self.segmentMiniTopInset
+                    }
+                } else {
+                    if self.headerHeightConstraint.constant >= self.headerHeight {
+                        if -offsetYWithSegment > self.headerHeight && !self.freezenHeaderWhenReachMaxHeaderHeight {
+                            self.headerHeightConstraint.constant = -offsetYWithSegment
+                        } else {
+                            self.headerHeightConstraint.constant = self.headerHeight
+                        }
+                    } else {
+                        if self.headerHeightConstraint.constant < -offsetYWithSegment {
+                            self.headerHeightConstraint.constant -= deltaOfOffsetY
+                        }
+                    }
+                }
+            }
+            
+            self.segmentTopInset = self.headerHeightConstraint.constant
+        })
         
-        scrollView.rx.contentInset.subscribe(onNext: {
-            print($0)
-        }).disposed(by: self.disposeBag)
-        
-        scrollView.addObserver(self, forKeyPath: "contentOffset", options: [.new, .old], context: &self.kOffset)
-        scrollView.addObserver(self, forKeyPath: "contentInset", options: [.new, .old], context: &self.kInset)
+        self.disposable2 = scrollView.rx.contentInset.subscribe(onNext: {
+            guard let inset = $0 else {
+                return
+            }
+            
+            if fabs(inset.top - self.originalTopInset) < 2 {
+                self.ignoreOffsetChanged = false
+            } else {
+                self.ignoreOffsetChanged = true
+            }
+        })
     }
     
     func scrollViewInPageController(controller: TableViewController) -> UIScrollView? {
@@ -240,37 +298,6 @@ extension ViewController {
         } else {
             return nil
         }
-    }
-    
-    private func imageLoad() {
-        var configuration: URLSessionConfiguration {
-            let urlCache = DataLoader.sharedUrlCache
-            let conf = URLSessionConfiguration.default
-            
-            conf.urlCache = URLCache(memoryCapacity: urlCache.memoryCapacity, diskCapacity: urlCache.diskCapacity, diskPath: "com.github.kean.Nuke.Cache")
-            conf.requestCachePolicy = .returnCacheDataElseLoad
-            return conf
-        }
-        
-        let pipeline = ImagePipeline {
-            $0.dataLoader = DataLoader(configuration: configuration)
-        }
-        
-        ImagePipeline.shared = pipeline
-        
-        let imageView = UIImageView(frame: .zero)
-        self.view.addSubview(imageView)
-        
-        constrain(imageView) {
-            $0.height == 100
-            $0.width == 100
-            $0.top == $0.superview!.top
-            $0.left == $0.superview!.left
-        }
-        
-        let urlString = "https://pbs.twimg.com/profile_images/723852223252328448/-v6zm-YP_400x400.jpg"
-        
-        ImagePipeline.shared.rx.loadImage(with: URL(string: urlString)!).map({ $0.image }).asObservable().bind(to: imageView.rx.image).disposed(by: self.disposeBag)
     }
     
     @objc func segmentControlDidChangedValue(sender: UISegmentedControl) {
@@ -300,10 +327,6 @@ extension ViewController {
         let scrollView = self.scrollViewInPageController(controller: controller)
         
         if self.headerHeightConstraint.constant != self.headerHeight {
-            print("--------------------------")
-            print(controller.tableView.tag)
-            print(scrollView!.contentOffset.y)
-            print("--------------------------")
             if (scrollView!.contentOffset.y >= -(self.segmentHeight + self.headerHeight)) && (scrollView!.contentOffset.y <= -self.segmentHeight) {
                 scrollView!.setContentOffset(CGPoint(x: 0, y: -self.segmentHeight - self.headerHeightConstraint.constant), animated: false)
             }
@@ -313,50 +336,15 @@ extension ViewController {
         scrollView!.setContentOffset(scrollView!.contentOffset, animated: false)
     }
     
-    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
-        if context == &kOffset && !ignoreOffsetChanged {
-            
-            
-        } else if context == &kInset {
-            //print("inset")
-            let insets = object as! UIEdgeInsets
-            if fabs(insets.top - originalTopInset) < 2 {
-                self.ignoreOffsetChanged = false
-            } else {
-                self.ignoreOffsetChanged = true
-            }
-        }
-    }
-    
     func removeObserverForPageController(controller: TableViewController) {
-        guard let scrollView = self.scrollViewInPageController(controller: controller) else {
+        guard let _ = self.scrollViewInPageController(controller: controller) else {
             return
         }
         
-        scrollView.removeObserver(self, forKeyPath: "contentOffset")
-        scrollView.removeObserver(self, forKeyPath: "contentInset")
+        self.disposable1?.dispose()
+        self.disposable2?.dispose()
     }
 }
-
-// キャッシュをHTTP Headerのmax ageで管理できるように
-enum HttpDiskCache {
-    struct CacheControl {
-        var maxAge: Int?
-    }
-    
-    struct Header {
-        var cacheControl: CacheControl?
-        var date: Date?
-        var expires: Date?
-    }
-}
-
-extension HTTPURLResponse {
-    var header: HttpDiskCache.Header {
-        return HttpDiskCache.Header()
-    }
-}
-
 
 extension Reactive where Base: UIScrollView {
     var contentOffset: Observable<CGPoint?> {

@@ -17,6 +17,13 @@
 		F703602C2191853A00B7805B /* CustomHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F703602B2191853A00B7805B /* CustomHeaderView.swift */; };
 		F703602D2191853A00B7805B /* CustomHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F703602B2191853A00B7805B /* CustomHeaderView.swift */; };
 		F703602E2191853A00B7805B /* CustomHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F703602B2191853A00B7805B /* CustomHeaderView.swift */; };
+		F70C54A221B2585D00E450E8 /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = F70C54A121B2585D00E450E8 /* ImageCache.swift */; };
+		F70C54A321B2585D00E450E8 /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = F70C54A121B2585D00E450E8 /* ImageCache.swift */; };
+		F70C54A421B2585D00E450E8 /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = F70C54A121B2585D00E450E8 /* ImageCache.swift */; };
+		F70C54AF21B27F5300E450E8 /* background.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F70C54AE21B27F5300E450E8 /* background.jpg */; };
+		F70C54B021B27F5300E450E8 /* background.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F70C54AE21B27F5300E450E8 /* background.jpg */; };
+		F70C54B121B27F5300E450E8 /* background.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F70C54AE21B27F5300E450E8 /* background.jpg */; };
+		F70C54B321B7E7CD00E450E8 /* FontAwesomeKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F70C54B221B7E7CD00E450E8 /* FontAwesomeKit.framework */; };
 		F711280721593C230040D43D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F711280621593C230040D43D /* AppDelegate.swift */; };
 		F711280921593C230040D43D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F711280821593C230040D43D /* ViewController.swift */; };
 		F711280C21593C230040D43D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F711280A21593C230040D43D /* Main.storyboard */; };
@@ -52,6 +59,9 @@
 		6296DCA8218D21CA00D41B9C /* RxTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxTest.framework; path = Carthage/Build/iOS/RxTest.framework; sourceTree = "<group>"; };
 		F703602321917E9C00B7805B /* CustomTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTableViewCell.swift; sourceTree = "<group>"; };
 		F703602B2191853A00B7805B /* CustomHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomHeaderView.swift; sourceTree = "<group>"; };
+		F70C54A121B2585D00E450E8 /* ImageCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
+		F70C54AE21B27F5300E450E8 /* background.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = background.jpg; sourceTree = "<group>"; };
+		F70C54B221B7E7CD00E450E8 /* FontAwesomeKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FontAwesomeKit.framework; path = Carthage/Build/iOS/FontAwesomeKit.framework; sourceTree = "<group>"; };
 		F711280321593C230040D43D /* SegmentScrollView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SegmentScrollView.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F711280621593C230040D43D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F711280821593C230040D43D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -73,6 +83,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F70C54B321B7E7CD00E450E8 /* FontAwesomeKit.framework in Frameworks */,
 				6296DCA7218D21BC00D41B9C /* RxCocoa.framework in Frameworks */,
 				6296DCA5218D21AC00D41B9C /* RxSwift.framework in Frameworks */,
 				6296DCA3218D219D00D41B9C /* RxNuke.framework in Frameworks */,
@@ -98,6 +109,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		F70C54A021B2584400E450E8 /* ImageCache */ = {
+			isa = PBXGroup;
+			children = (
+				F70C54A121B2585D00E450E8 /* ImageCache.swift */,
+			);
+			path = ImageCache;
+			sourceTree = "<group>";
+		};
+		F70C54A921B271AE00E450E8 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				F70C54AE21B27F5300E450E8 /* background.jpg */,
+			);
+			path = Images;
+			sourceTree = "<group>";
+		};
 		F71127FA21593C230040D43D = {
 			isa = PBXGroup;
 			children = (
@@ -122,6 +149,8 @@
 		F711280521593C230040D43D /* SegmentScrollView */ = {
 			isa = PBXGroup;
 			children = (
+				F70C54A921B271AE00E450E8 /* Images */,
+				F70C54A021B2584400E450E8 /* ImageCache */,
 				F711280621593C230040D43D /* AppDelegate.swift */,
 				F711280821593C230040D43D /* ViewController.swift */,
 				F711280A21593C230040D43D /* Main.storyboard */,
@@ -155,6 +184,7 @@
 		F711283421593D070040D43D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F70C54B221B7E7CD00E450E8 /* FontAwesomeKit.framework */,
 				6296DCA8218D21CA00D41B9C /* RxTest.framework */,
 				6296DCA6218D21BC00D41B9C /* RxCocoa.framework */,
 				6296DCA4218D21AC00D41B9C /* RxSwift.framework */,
@@ -271,6 +301,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F711281121593C250040D43D /* LaunchScreen.storyboard in Resources */,
+				F70C54AF21B27F5300E450E8 /* background.jpg in Resources */,
 				F711280E21593C250040D43D /* Assets.xcassets in Resources */,
 				F711280C21593C230040D43D /* Main.storyboard in Resources */,
 			);
@@ -280,6 +311,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F70C54B021B27F5300E450E8 /* background.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -287,6 +319,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F70C54B121B27F5300E450E8 /* background.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -304,6 +337,7 @@
 				"$(SRCROOT)/Carthage/Build/iOS/RxNuke.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/RxSwift.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/RxCocoa.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/FontAwesomeKit.framework",
 			);
 			outputPaths = (
 			);
@@ -318,6 +352,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F70C54A221B2585D00E450E8 /* ImageCache.swift in Sources */,
 				F703602C2191853A00B7805B /* CustomHeaderView.swift in Sources */,
 				F703602421917E9C00B7805B /* CustomTableViewCell.swift in Sources */,
 				F711280921593C230040D43D /* ViewController.swift in Sources */,
@@ -331,6 +366,7 @@
 			files = (
 				F703602521917E9C00B7805B /* CustomTableViewCell.swift in Sources */,
 				F703602D2191853A00B7805B /* CustomHeaderView.swift in Sources */,
+				F70C54A321B2585D00E450E8 /* ImageCache.swift in Sources */,
 				F711281C21593C260040D43D /* SegmentScrollViewTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -341,6 +377,7 @@
 			files = (
 				F703602621917E9C00B7805B /* CustomTableViewCell.swift in Sources */,
 				F703602E2191853A00B7805B /* CustomHeaderView.swift in Sources */,
+				F70C54A421B2585D00E450E8 /* ImageCache.swift in Sources */,
 				F711282721593C260040D43D /* SegmentScrollViewUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
